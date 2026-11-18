@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="is-intro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Raquel Ávila Imobiliária · Carandaí, MG</title>
+<meta name="description" content="Imóveis para comprar e alugar em Carandaí, MG. Corretora Raquel Ávila, CRECI e perita avaliadora.">
+<link rel="icon" href="favicon.svg">
+<link rel="preload" as="image" href="frames/obra/0001.webp">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Variable.woff2) format("woff2");font-weight:200 700;font-display:swap}
+:root{--ink:#0b0b0b;--mute:#6e6e6e;--line:#e4e4e4;--bar:#161616;--f:'General Sans',system-ui,sans-serif;--m:'IBM Plex Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html.is-intro{overflow:hidden}
+body{font-family:var(--f);font-weight:400;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+h1,h2,h3{font-weight:400;letter-spacing:-.035em;line-height:1.02}
+.wrap{padding:0 clamp(16px,4vw,56px)}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:100;pointer-events:none}
+.loader__half{position:absolute;top:0;bottom:0;width:calc(50% + 1px);background:var(--ink);transition:transform 1.3s cubic-bezier(.65,0,.35,1)}
+.loader__half--l{left:0;transform-origin:left}.loader__half--r{right:0;transform-origin:right}
+.loader.open .loader__half{transform:scaleX(0)}
+.loader__plumb{position:absolute;left:50%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;transition:transform .65s cubic-bezier(.55,0,1,.45)}
+.loader__swing{display:flex;flex-direction:column;align-items:center;transform-origin:top center;animation:swing 2.4s ease-in-out infinite}
+.loader__line{width:4px;background:#fff;height:12vh;transition:height .3s}
+.loader__bar{width:55px;height:4px;background:#fff;margin:12px 0 0;transform:scaleX(0);transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.loader__bob{width:34px;height:39px;background:#fff;clip-path:polygon(0 0,100% 0,100% 42%,50% 100%,0 42%);margin-top:12px}
+.loader.done .loader__bar{transform:scaleX(1)}.loader.done .loader__swing{animation:none}
+.loader.out .loader__plumb{transform:translate(-50%,-120vh)}
+.loader__n{position:absolute;left:calc(50% + 34px);color:#fff;transition:opacity .4s,filter .4s}
+.loader.done .loader__n,.loader.done .loader__meta{opacity:0;filter:blur(8px)}
+.loader__meta{opacity:0;position:absolute;bottom:28px;left:0;right:0;display:flex;justify-content:space-between;padding:0 clamp(16px,4vw,56px);color:#fff;transition:opacity .4s,filter .4s}
+@keyframes swing{0%,100%{transform:rotate(2deg)}50%{transform:rotate(-2deg)}}
+
+/* abertura: vídeo das nuvens */
+.sky{position:fixed;inset:0;z-index:90;background:#0b0b0b;transition:opacity .6s ease}
+.sky video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1);transition:transform 2.6s cubic-bezier(.16,1,.3,1)}
+.sky.play video{transform:scale(1)}
+.sky__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 30%,transparent 50%,rgba(0,0,0,.7));opacity:0;transition:opacity 1.5s}
+.sky.late .sky__shade{opacity:1}
+.sky__mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-size:clamp(40px,7vw,96px);font-weight:500;letter-spacing:-.045em;white-space:nowrap;opacity:0;filter:blur(14px)}
+.sky.play .sky__mark{animation:mark 1.7s ease forwards}
+@keyframes mark{0%{opacity:0;filter:blur(14px);transform:translate(-50%,-40%)}30%,62%{opacity:1;filter:blur(0);transform:translate(-50%,-50%)}100%{opacity:0;filter:blur(12px);transform:translate(-50%,-62%)}}
+.sky.gone{opacity:0;pointer-events:none}
+.hero__cv,.hero__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 28%,transparent 48%,rgba(0,0,0,.72))}
+
+/* topo */
+.top{position:fixed;top:0;left:0;right:0;z-index:40;height:68px;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .4s,color .4s;opacity:0}
+.top.show{opacity:1;transition:opacity .6s,background .4s,color .4s}
+.top.light{color:var(--ink);background:rgba(255,255,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.top__logo{font-size:22px;letter-spacing:-.03em;font-weight:500}
+.top__logo small{font-weight:400}
+.top__cta{position:absolute;right:clamp(16px,4vw,56px)}
+
+/* barra flutuante */
+.bar{position:fixed;left:50%;bottom:20px;transform:translate(-50%,120px);z-index:50;width:320px;height:56px;background:var(--bar);color:#fff;border-radius:4px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.bar.show{transform:translate(-50%,0)}
+.bar__mark{font-size:15px;font-weight:500;letter-spacing:-.02em}
+.bar__label{transition:filter .25s,opacity .25s}.bar__label.swap{filter:blur(6px);opacity:0}
+.bar__burger{width:22px;height:14px;display:flex;flex-direction:column;justify-content:space-between;background:none;border:0;cursor:pointer}
+.bar__burger i{height:1.5px;background:#fff;display:block;transition:transform .3s}
+.menu{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);width:320px;background:var(--bar);color:#fff;border-radius:4px;padding:18px 18px 8px;z-index:49;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
+.menu.open{visibility:visible;opacity:1}
+.menu a{display:flex;gap:14px;align-items:baseline;font-size:22px;letter-spacing:-.03em;padding:8px 0;border-bottom:1px solid #2a2a2a;opacity:0;transform:translateY(14px);filter:blur(8px);transition:all .5s cubic-bezier(.16,1,.3,1)}
+.menu a:last-child{border:0}
+.menu a span{font-family:var(--m);font-size:10px;color:#8a8a8a}
+.menu.open a{opacity:1;transform:none;filter:none}
+.menu.open a:nth-child(2){transition-delay:.05s}.menu.open a:nth-child(3){transition-delay:.1s}.menu.open a:nth-child(4){transition-delay:.15s}.menu.open a:nth-child(5){transition-delay:.2s}
+
+/* hero */
+.hero{position:relative;height:100vh;min-height:560px;color:#fff;overflow:hidden;background:#1b1b1b}
+.hero__img{position:absolute;inset:0;background:
+ linear-gradient(180deg,rgba(0,0,0,.45),transparent 30%,transparent 50%,rgba(0,0,0,.7)),
+ radial-gradient(120% 80% at 70% 30%,#5d5d5d,#262626 60%,#111);transform:scale(1.1);transition:transform 2.6s cubic-bezier(.16,1,.3,1)}
+.hero.in .hero__img{transform:scale(1)}
+.hero__ph{position:absolute;top:84px;left:clamp(16px,4vw,56px);color:rgba(255,255,255,.55)}
+.hero{height:600vh;overflow:visible}
+.hero__stick{position:sticky;top:0;height:100vh;min-height:560px;overflow:hidden}
+.house{position:absolute;left:50%;top:44%;width:min(92vw,1100px);transform:translate(-50%,-50%)}
+.house *{fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.house .d{stroke-dasharray:1;stroke-dashoffset:1}
+.house .thin{stroke-width:1;opacity:.55}
+.house .proj{stroke-dasharray:6 7;opacity:0;stroke-width:1.2}
+.house .glow{fill:#fff;stroke:none;opacity:0}
+.hero__grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px}
+.stage{position:absolute;left:0;right:0;bottom:110px;text-align:center;padding:0 16px;pointer-events:none}
+.stage .mono{display:block;margin-bottom:14px;opacity:0;transition:opacity .6s}
+.stage h2{font-size:clamp(38px,4.6vw,78px);display:flex;justify-content:center;flex-wrap:wrap;gap:0 .26em}
+.stage .w{display:inline-block;overflow:hidden;padding-bottom:.08em}
+.stage .w>span{display:inline-block;transform:translateY(100%);filter:blur(10px);opacity:0;transition:transform 1s cubic-bezier(.215,.61,.355,1),filter 1s,opacity 1s}
+.stage p{margin-top:16px;font-size:clamp(14px,1.1vw,17px);line-height:1.5;opacity:0;filter:blur(8px);transform:translateY(12px);transition:all .9s cubic-bezier(.215,.61,.355,1)}
+.stage.on .mono,.stage.on p{opacity:1;filter:none;transform:none}
+.stage.on .w>span{transform:none;filter:none;opacity:1}
+.hero__txt.leave .ln>span{transform:translateY(-100%);filter:blur(10px);opacity:0}
+.hero__txt{position:absolute;left:0;right:0;bottom:110px;text-align:center;padding:0 16px}
+.hero__txt h1{font-size:clamp(38px,4.6vw,78px)}
+.hero__count{position:absolute;left:clamp(16px,4vw,56px);bottom:36px}
+
+/* roll */
+.ln{display:block;overflow:hidden;padding-bottom:.08em}
+.ln>span{display:block;transform:translateY(100%);filter:blur(10px);opacity:0;transition:transform 1.1s cubic-bezier(.215,.61,.355,1),filter 1.1s,opacity 1.1s}
+.in .ln>span{transform:none;filter:none;opacity:1}
+.in .ln:nth-child(2)>span{transition-delay:.09s}.in .ln:nth-child(3)>span{transition-delay:.18s}
+.rise{opacity:0;transform:translateY(32px);filter:blur(10px);transition:all 1.1s cubic-bezier(.215,.61,.355,1)}
+.rise.in{opacity:1;transform:none;filter:none}
+
+section{padding:clamp(80px,12vw,160px) 0}
+.eyebrow{color:var(--mute);display:block;margin-bottom:22px}
+.h2{font-size:clamp(34px,4.4vw,72px)}
+
+/* dados */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0}
+.facts div{padding:28px clamp(16px,2vw,28px);border-right:1px solid var(--line)}
+.facts div:last-child{border:0}
+.facts b{display:block;font-weight:400;font-size:clamp(34px,3.4vw,58px);letter-spacing:-.035em;margin-top:18px}
+.facts .mono{color:var(--mute)}
+
+/* imóveis */
+.list__head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+.filters{display:flex;gap:8px}
+.filters button{font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;background:none;border:1px solid var(--ink);padding:10px 16px;cursor:pointer;color:var(--ink);transition:.25s}
+.filters button.on,.filters button:hover{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:56px 24px}
+.card{grid-column:span 2}.card.wide{grid-column:span 3}
+.card.hide{display:none}
+.ph{position:relative;overflow:hidden;aspect-ratio:4/5;background:#ececec}
+.wide .ph{aspect-ratio:3/2}
+.ph i{position:absolute;inset:0;transition:transform 1.2s cubic-bezier(.16,1,.3,1);background:linear-gradient(135deg,#dcdcdc,#f3f3f3 50%,#d4d4d4)}
+.card:hover .ph i{transform:scale(1.03)}
+.ph em{position:absolute;left:14px;top:14px;font-style:normal;background:#fff;padding:6px 9px}
+.ph u{position:absolute;inset:0;display:grid;place-items:center;text-decoration:none;color:#9a9a9a}
+.card h3{font-size:24px;margin:18px 0 8px}
+.card p{color:var(--mute);line-height:1.6}
+.card__row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
+.card__price{font-size:20px;letter-spacing:-.02em}
+.card__wa{border-bottom:1px solid var(--ink);padding-bottom:2px}
+.note{margin-top:40px;color:var(--mute)}
+
+/* sobre */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:start}
+.about__img{position:sticky;top:100px;aspect-ratio:4/5;background:linear-gradient(160deg,#d9d9d9,#f2f2f2)}
+.about__img span{position:absolute;bottom:-26px;left:0;color:var(--mute)}
+.steps{margin-top:48px;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:44px 1fr auto;gap:16px;padding:24px 0;border-bottom:1px solid var(--line)}
+.step .mono{color:var(--mute)}
+.step h3{font-size:24px}
+.step p{color:var(--mute);margin-top:8px;line-height:1.6;max-width:44ch}
+
+/* serviços */
+.center{text-align:center}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:72px;text-align:left}
+.cols div{border-top:1px solid var(--ink);padding-top:18px;font-size:19px;line-height:1.4;letter-spacing:-.01em}
+.cols .mono{display:block;color:var(--mute);margin-bottom:14px}
+
+/* contato */
+.close{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px)}
+.close p.lead{font-size:19px;line-height:1.5;color:var(--mute);margin-top:28px;max-width:38ch}
+form{display:grid;gap:26px}
+label{display:block}
+label .mono{color:var(--mute)}
+input,select{width:100%;border:0;border-bottom:1px solid #bdbdbd;padding:12px 0;font:inherit;font-size:18px;background:none;border-radius:0;outline:none;color:var(--ink);transition:border-color .3s}
+input:focus,select:focus{border-color:var(--ink)}
+.btn{justify-self:start;font-family:var(--m);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:18px 26px;border:1px solid var(--ink);background:none;cursor:pointer;color:var(--ink);transition:.3s}
+.btn:hover{background:var(--ink);color:#fff}
+
+footer{padding:80px 0 140px;border-top:1px solid var(--line)}
+.foot__logo{font-size:clamp(56px,13vw,220px);letter-spacing:-.05em;line-height:.9;font-weight:500}
+.foot__line{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--mute);margin-top:32px}
+
+/* selo */
+.f9{position:fixed;right:14px;bottom:88px;z-index:60;display:flex;align-items:center;gap:8px;background:rgba(14,22,19,.92);color:#e9fff6;font:500 11px/1 var(--f);padding:6px 12px 6px 6px;border-radius:999px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+.f9 svg{width:24px;height:24px;flex:none}
+
+@media (max-width:820px){
+ .top{justify-content:flex-start;padding:0 16px}.top__cta{right:16px}
+ .hero__count{display:none}.hero__txt{bottom:100px}
+ .facts{grid-template-columns:1fr 1fr}.facts div:nth-child(2){border-right:0}.facts div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .grid{grid-template-columns:1fr;gap:48px}.card,.card.wide{grid-column:auto}.ph,.wide .ph{aspect-ratio:3/2}
+ .about,.close{grid-template-columns:1fr}.about__img{position:relative;top:0;aspect-ratio:3/2;margin-bottom:24px}
+ .step{grid-template-columns:36px 1fr}.step>.mono:last-child{grid-column:2}
+ .cols{grid-template-columns:1fr}
+ .bar,.menu{width:calc(100% - 32px)}
+ .f9{bottom:84px;right:16px}
+}
+@media (prefers-reduced-motion:reduce){
+ *{transition-duration:.01s!important;animation:none!important}
+ .ln>span,.rise{transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+ <div class="loader__half loader__half--l"></div><div class="loader__half loader__half--r"></div>
+ <div class="loader__plumb" id="plumb"><div class="loader__swing">
+  <i class="loader__line" id="line"></i><i class="loader__bar"></i><i class="loader__bob"></i>
+ </div></div>
+ <span class="loader__n mono" id="num">000</span>
+ <p class="loader__meta mono"><span>Raquel Ávila</span><span>Carandaí · MG</span></p>
+</div>
+
+<div class="sky" id="sky" aria-hidden="true">
+ <video id="vid" poster="intro/nuvens.webp" muted playsinline preload="none"></video>
+ <div class="sky__shade"></div>
+ <div class="sky__mark">Raquel Ávila</div>
+</div>
+
+<header class="top" id="top">
+ <a href="#inicio" class="top__logo">Raquel Ávila <small>Imóveis</small></a>
+ <a href="#contato" class="top__cta mono">↳ Falar com a corretora</a>
+</header>
+
+<main>
+<section class="hero" id="inicio" data-label="Início" style="padding:0">
+<div class="hero__stick">
+ <img class="hero__poster" id="poster" src="frames/obra/0001.webp" alt="">
+ <canvas class="hero__cv" id="cv"></canvas>
+ <div class="hero__shade"></div>
+ <div class="hero__txt" id="opening">
+  <h1><span class="ln"><span>Imóveis em Carandaí,</span></span><span class="ln"><span>da visita à chave.</span></span></h1>
+ </div>
+ <div id="stages"></div>
+ <span class="hero__count mono" id="count">Etapa 0/5</span>
+</div>
+</section>
+
+<div class="facts wrap" data-label="Números">
+ <div class="rise"><span class="mono">Atuação</span><b>Carandaí</b></div>
+ <div class="rise"><span class="mono">Modalidades</span><b>Venda e aluguel</b></div>
+ <div class="rise"><span class="mono">Credenciais</span><b>CRECI · CNAI</b></div>
+ <div class="rise"><span class="mono">Atendimento</span><b>9h–18h</b></div>
+</div>
+
+<section class="wrap" id="imoveis" data-label="Imóveis">
+ <div class="list__head">
+  <div><span class="eyebrow mono">Imóveis disponíveis</span>
+  <h2 class="h2 roll"><span class="ln"><span>Escolha pelo bairro,</span></span><span class="ln"><span>chame pelo WhatsApp.</span></span></h2></div>
+  <div class="filters" role="group" aria-label="Filtrar">
+   <button class="on" data-f="all">Todos</button><button data-f="venda">Venda</button><button data-f="aluguel">Aluguel</button>
+  </div>
+ </div>
+ <div class="grid">
+  <article class="card wide rise" data-t="venda"><div class="ph"><i></i><u class="mono">Foto do imóvel</u><em class="mono">Venda</em></div>
+   <h3>Casa 3 quartos</h3><p class="mono">Centro · 180 m² · 2 vagas</p>
+   <div class="card__row"><span class="card__price">R$ 480.000</span><a class="card__wa mono" target="_blank" rel="noopener" href="https://wa.me/553288071932?text=Ol%C3%A1!%20Tenho%20interesse%20na%20casa%203%20quartos%20no%20Centro.">WhatsApp →</a></div></article>
+  <article class="card rise" data-t="aluguel"><div class="ph"><i></i><u class="mono">Foto do imóvel</u><em class="mono">Aluguel</em></div>
+   <h3>Apartamento 2 quartos</h3><p class="mono">Bairro exemplo · 70 m² · 1 vaga</p>
+   <div class="card__row"><span class="card__price">R$ 1.300/mês</span><a class="card__wa mono" target="_blank" rel="noopener" href="https://wa.me/553288071932?text=Ol%C3%A1!%20Tenho%20interesse%20no%20apartamento%202%20quartos%20para%20alugar.">WhatsApp →</a></div></article>
+  <article class="card rise" data-t="venda"><div class="ph"><i></i><u class="mono">Foto do imóvel</u><em class="mono">Venda</em></div>
+   <h3>Lote 360 m²</h3><p class="mono">Bairro exemplo · plano · escriturado</p>
+   <div class="card__row"><span class="card__price">R$ 120.000</span><a class="card__wa mono" target="_blank" rel="noopener" href="https://wa.me/553288071932?text=Ol%C3%A1!%20Tenho%20interesse%20no%20lote%20de%20360%20m%C2%B2.">WhatsApp →</a></div></article>
+  <article class="card wide rise" data-t="aluguel"><div class="ph"><i></i><u class="mono">Foto do imóvel</u><em class="mono">Aluguel</em></div>
+   <h3>Casa com quintal</h3><p class="mono">Bairro exemplo · 2 quartos · garagem</p>
+   <div class="card__row"><span class="card__price">R$ 1.500/mês</span><a class="card__wa mono" target="_blank" rel="noopener" href="https://wa.me/553288071932?text=Ol%C3%A1!%20Tenho%20interesse%20na%20casa%20com%20quintal%20para%20alugar.">WhatsApp →</a></div></article>
+ </div>
+ <p class="note mono">Imóveis de exemplo · trocar pelos anúncios reais</p>
+</section>
+
+<section class="wrap" id="sobre" data-label="A corretora">
+ <div class="about">
+  <div class="about__img"><span class="mono">[ foto da Raquel ]</span></div>
+  <div>
+   <span class="eyebrow mono">A corretora</span>
+   <h2 class="h2 roll"><span class="ln"><span>Quem vende, aluga</span></span><span class="ln"><span>e avalia é a mesma pessoa.</span></span></h2>
+   <div class="steps">
+    <div class="step rise"><span class="mono">01</span><div><h3>Conversa</h3><p>Você diz o que procura, o bairro e quanto quer pagar. Pelo WhatsApp mesmo.</p></div><span class="mono">mesmo dia</span></div>
+    <div class="step rise"><span class="mono">02</span><div><h3>Visita</h3><p>Ela separa os imóveis que fazem sentido e acompanha a visita.</p></div><span class="mono">com hora marcada</span></div>
+    <div class="step rise"><span class="mono">03</span><div><h3>Avaliação</h3><p>Perita avaliadora com CNAI: o preço tem laudo, não chute.</p></div><span class="mono">laudo</span></div>
+    <div class="step rise"><span class="mono">04</span><div><h3>Contrato e chave</h3><p>Documentação conferida antes de assinar. Depois, a chave.</p></div><span class="mono">até a entrega</span></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="wrap center" id="servicos" data-label="Serviços">
+ <h2 class="roll" style="font-size:clamp(36px,5.4vw,92px)"><span class="ln"><span>Quer vender ou alugar</span></span><span class="ln"><span>o seu imóvel?</span></span></h2>
+ <div class="cols">
+  <div class="rise"><span class="mono">01 · Vender</span>Avaliação com laudo, fotos e anúncio do seu imóvel.</div>
+  <div class="rise"><span class="mono">02 · Alugar</span>Inquilino com cadastro conferido e contrato redigido.</div>
+  <div class="rise"><span class="mono">03 · Avaliar</span>Laudo de avaliação para venda, partilha ou financiamento.</div>
+ </div>
+</section>
+
+<section class="wrap" id="contato" data-label="Contato">
+ <div class="close">
+  <div>
+   <span class="eyebrow mono">Contato</span>
+   <h2 class="h2 roll"><span class="ln"><span>Procurando imóvel</span></span><span class="ln"><span>em Carandaí?</span></span></h2>
+   <p class="lead rise">Diga o que você procura. A resposta vem pelo WhatsApp, de segunda a sexta, das 9h às 18h.</p>
+  </div>
+  <form id="form" class="rise">
+   <label><span class="mono">Você quer</span><select name="q"><option>Comprar</option><option>Alugar</option><option>Vender meu imóvel</option><option>Alugar meu imóvel</option><option>Avaliação</option></select></label>
+   <label><span class="mono">Bairro de interesse</span><input name="b" placeholder="Ex.: Centro"></label>
+   <label><span class="mono">Faixa de valor</span><input name="v" placeholder="Ex.: até R$ 400 mil"></label>
+   <label><span class="mono">Seu nome</span><input name="n" required></label>
+   <button class="btn" type="submit">Enviar pelo WhatsApp →</button>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer class="wrap" data-label="Contato">
+ <div class="foot__logo">Raquel Ávila</div>
+ <div class="foot__line mono"><span>Corretora de imóveis · Perita avaliadora · CRECI [nº]</span><span>(32) 8807-1932 · Carandaí, MG</span><span>© 2026</span></div>
+</footer>
+
+<nav class="menu" id="menu">
+ <a href="#inicio"><span>01</span>Início</a><a href="#imoveis"><span>02</span>Imóveis</a><a href="#sobre"><span>03</span>A corretora</a><a href="#servicos"><span>04</span>Vender ou alugar</a><a href="#contato"><span>05</span>Contato</a>
+</nav>
+<div class="bar" id="bar">
+ <span class="bar__mark">RA</span><span class="bar__label mono" id="label">Início</span>
+ <button class="bar__burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+</div>
+
+<div class="f9" aria-label="Prévia criada por F9 Coding">
+ <svg viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5a43"/><stop offset="1" stop-color="#062b20"/></linearGradient></defs><rect width="24" height="24" rx="12" fill="url(#g)"/><path d="M8 6h9v3h-6v2h5v3h-5v4H8z" fill="#bff5df" fill-opacity=".85" stroke="#fff" stroke-width=".8"/></svg>
+ Prévia criada por F9 Coding · uso não autorizado
+</div>
+
+<script>
+(()=>{
+const R=matchMedia('(prefers-reduced-motion:reduce)').matches;
+history.scrollRestoration='manual';scrollTo(0,0);
+const L=document.getElementById('loader'),line=document.getElementById('line'),num=document.getElementById('num');
+const meta=L.querySelectorAll('.loader__meta span');
+// ---- quadros do hero
+let lastKey='';const N=150,imgs=new Array(N),cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+const src=i=>`frames/obra/${String(i+1).padStart(4,'0')}.webp`;
+function load(i){if(imgs[i])return imgs[i].p;const im=new Image();im.decoding='async';
+ const p=new Promise(r=>{im.onload=()=>{im.ok=1;lastKey='';r()};im.onerror=r});im.src=src(i);imgs[i]=im;im.p=p;return p}
+const first=[];for(let i=0;i<N;i+=4)first.push(i);first.push(N-1);
+let fDone=0;const fPass=Promise.all(first.map(i=>load(i).then(()=>{fDone++;need()})));
+// ---- vídeo das nuvens (bytes reais)
+const vid=document.getElementById('vid');let vLoaded=0,vTotal=5.9e6,vBlob=null;const ac=new AbortController();
+const vPass=R?Promise.resolve():fetch('intro/nuvens.mp4',{signal:ac.signal}).then(async r=>{
+ vTotal=+r.headers.get('content-length')||vTotal;const rd=r.body.getReader(),parts=[];
+ for(;;){const {done,value}=await rd.read();if(done)break;parts.push(value);vLoaded+=value.length;need()}
+ vBlob=new Blob(parts,{type:'video/mp4'});vid.src=URL.createObjectURL(vBlob);
+ await new Promise(r=>{vid.addEventListener('loadeddata',r,{once:true});vid.load()});
+}).catch(()=>{vBlob=null});
+const slow=setTimeout(()=>{if(!vBlob&&!R){ac.abort();meta[0].textContent='Vídeo · fica para depois'}},9000);
+let fontsOk=false;Promise.all([document.fonts.load('400 1em "General Sans"'),document.fonts.load('400 1em "IBM Plex Mono"')]).catch(()=>{}).then(()=>{fontsOk=true;L.querySelector('.loader__meta').style.opacity=1});
+let target=0;
+function need(){const mb=x=>(x/1e6).toFixed(1).replace('.',',');
+ if(!R)meta[0].textContent=vBlob?`Vídeo ${mb(vTotal)} / ${mb(vTotal)} MB`:(meta[0].textContent.includes('depois')?meta[0].textContent:`Vídeo ${mb(vLoaded)} / ${mb(vTotal)} MB`);
+ meta[1].textContent=`Quadros ${String(fDone).padStart(3,'0')} / ${String(first.length).padStart(3,'0')}`;
+ const v=R?1:Math.min(1,vLoaded/vTotal),f=fDone/first.length;target=Math.min(99,(v*.6+f*.4)*100)}
+Promise.all([vPass,fPass,document.fonts.ready]).then(()=>{clearTimeout(slow);target=100});
+setTimeout(()=>{target=100},9200);
+let shown=0,t0=performance.now();need();
+function tick(){
+ const el=performance.now()-t0;
+ shown+=(Math.min(target,el/1100*100)-shown)*.11;
+ if(target===100&&el>1100&&shown>99.4)shown=100;
+ const n=Math.round(shown);num.textContent=String(n).padStart(3,'0');
+ const vh=innerHeight,h=vh*.12+(vh*.5-60-vh*.12)*shown/100;line.style.height=h+'px';num.style.top=(h+30)+'px';
+ if(n<100)requestAnimationFrame(tick);else finish();
+}
+function finish(){
+ L.classList.add('done');
+ for(let i=0;i<N;i++)load(i); // resto dos quadros
+ const sky=document.getElementById('sky');let gone=false;
+ const reveal=()=>{if(gone)return;gone=true;document.documentElement.classList.remove('is-intro');
+  sky.classList.add('gone');setTimeout(()=>sky.remove(),700);
+  setTimeout(()=>{document.querySelector('.hero__txt').classList.add('in')},350);
+  setTimeout(()=>{document.getElementById('top').classList.add('show');document.getElementById('bar').classList.add('show')},800)};
+ if(R){L.remove();reveal();return}
+ if(!vBlob){sky.remove();setTimeout(()=>{L.classList.add('out','open')},550);setTimeout(()=>{L.remove();gone=false;reveal()},550+1300);return}
+ setTimeout(()=>{L.classList.add('out','open');sky.classList.add('play')},550);
+ setTimeout(()=>{L.remove()},550+1400);
+ // toca com a fresta ~70% aberta
+ setTimeout(()=>{vid.play().catch(reveal)},550+900);
+ vid.addEventListener('timeupdate',()=>{if(vid.duration&&vid.currentTime>vid.duration-1.5)sky.classList.add('late')});
+ vid.addEventListener('ended',reveal);vid.addEventListener('error',reveal);
+ setTimeout(reveal,550+900+10000);
+}
+requestAnimationFrame(tick);
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.roll,.rise').forEach((el,i)=>{el.style.transitionDelay=el.classList.contains('rise')?(i%4)*.1+'s':'';io.observe(el)});
+
+// hero: a casa sendo construída no scroll
+const ST=[
+ ['01 · Terreno','Do terreno…','Lotes em Carandaí, com avaliação antes de qualquer proposta.'],
+ ['02 · Fundação','…à fundação…','Documentação do imóvel conferida desde o começo.'],
+ ['03 · Estrutura','…à estrutura…','Casas prontas, na planta e em construção.'],
+ ['04 · Acabamento','…ao acabamento…','Visita acompanhada pela corretora, com hora marcada.'],
+ ['05 · Chave','…à chave.','Contrato conferido e a chave na sua mão.']];
+const box=document.getElementById('stages');
+ST.forEach(s=>{const d=document.createElement('div');d.className='stage';
+ d.innerHTML=`<span class="mono">${s[0]}</span><h2>${s[1].split(' ').map((w,i)=>`<span class="w"><span style="transition-delay:${i*.08}s">${w}</span></span>`).join('')}</h2><p>${s[2]}</p>`;box.appendChild(d)});
+const stages=[...box.children],hero=document.querySelector('.hero'),opening=document.getElementById('opening'),count=document.getElementById('count');
+const cl=(v)=>Math.max(0,Math.min(1,v)),sm=t=>t*t*(3-2*t);
+let stageLabel='Início',qT=0,qC=0;
+function pick(i){i=Math.max(0,Math.min(N-1,i));if(imgs[i]&&imgs[i].ok)return imgs[i];
+ for(let d=1;d<N;d++){for(const j of[i-d,i+d])if(j>=0&&j<N&&imgs[j]&&imgs[j].ok)return imgs[j]}return null}
+function cover(im,a,blur){if(!im)return;const W=cv.width,H=cv.height,s=Math.max(W/im.naturalWidth,H/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;
+ ctx.globalAlpha=a;ctx.filter=blur>.05?`blur(${blur}px)`:'none';ctx.drawImage(im,(W-w)/2,(H-h)/2,w,h);ctx.globalAlpha=1;ctx.filter='none'}
+function size(){const d=Math.min(devicePixelRatio||1,2);cv.width=innerWidth*d;cv.height=innerHeight*d;lastKey=''}
+size();addEventListener('resize',size);
+const F=.06; // janela da fusão (fração do vídeo)
+function frameAt(clip,loc){return clip*30+Math.round(cl(loc)*29)}
+function draw(q){
+ const pos=q*5,key=pos.toFixed(4)+cv.width;if(key===lastKey)return;lastKey=key;
+ if(R){const c=Math.min(4,Math.floor(pos));ctx.clearRect(0,0,cv.width,cv.height);cover(pick(c*30+15),1,0);return}
+ const c=Math.min(4,Math.floor(pos)),loc=pos-c,half=F*5/2;
+ let k=-1;for(let j=1;j<5;j++)if(Math.abs(pos-j)<half)k=j;
+ ctx.clearRect(0,0,cv.width,cv.height);
+ if(k<0){cover(pick(frameAt(c,loc)),1,0);return}
+ const a=sm(cl((pos-(k-half))/(2*half))),blur=3*Math.sin(Math.PI*a)*(devicePixelRatio||1);
+ const out=pos<k?frameAt(k-1,pos-(k-1)):frameAt(k-1,1),inn=pos<k?frameAt(k,0):frameAt(k,pos-k);
+ cover(pick(out),1,blur);cover(pick(inn),a,blur);
+}
+(function loop(){qC+=(qT-qC)*(R?1:.12);if(Math.abs(qT-qC)<1e-4)qC=qT;draw(qC);
+ if(imgs[0]&&imgs[0].ok)document.getElementById('poster').style.visibility='hidden';requestAnimationFrame(loop)})();
+function heroUpdate(){
+ const r=hero.getBoundingClientRect(),tot=hero.offsetHeight-innerHeight;
+ const p=cl(-r.top/tot),q=cl((p-.06)/.9),k=Math.min(4,Math.floor(q*5)),loc=q*5-k;
+ qT=p>.96?1:q;
+ opening.classList.toggle('leave',p>.02);
+ const active=p<.06?-1:k,show=active>=0&&(active===4||loc>.2&&loc<.82);
+ stages.forEach((s,i)=>s.classList.toggle('on',i===active&&show));
+ count.textContent=`Obra · etapa ${p<.06?0:k+1}/5`;
+ stageLabel=p<.06?'Início':ST[k][0].split(' · ')[1];
+}
+
+// topo + rótulo da barra
+const top=document.getElementById('top'),lab=document.getElementById('label');
+const secs=[...document.querySelectorAll('[data-label]')];let cur='Início';
+function onScroll(){
+ heroUpdate();
+ top.classList.toggle('light',scrollY>hero.offsetHeight-80);
+ let s=secs[0];for(const x of secs)if(x.getBoundingClientRect().top<innerHeight*.5)s=x;
+ const t=s===hero?stageLabel:s.dataset.label;if(t!==cur){cur=t;lab.classList.add('swap');setTimeout(()=>{lab.textContent=t;lab.classList.remove('swap')},180)}
+}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+
+// menu
+const menu=document.getElementById('menu');
+document.getElementById('burger').onclick=()=>menu.classList.toggle('open');
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+
+// filtros
+document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
+ document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',b.dataset.f!=='all'&&c.dataset.t!==b.dataset.f));
+});
+
+// form → WhatsApp
+document.getElementById('form').onsubmit=e=>{
+ e.preventDefault();const f=new FormData(e.target);
+ const msg=`Olá, Raquel! Sou ${f.get('n')}. Quero: ${f.get('q')}. Bairro: ${f.get('b')||'-'}. Valor: ${f.get('v')||'-'}.`;
+ open('https://wa.me/553288071932?text='+encodeURIComponent(msg),'_blank');
+};
+})();
+</script>
+</body>
+</html>
